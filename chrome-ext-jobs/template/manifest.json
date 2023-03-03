@@ -1,0 +1,42 @@
+{
+  "name": "104",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "CL",
+  "icons": {
+    "128": "105.png"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' ; object-src 'self'",
+  "permissions": [
+    "activeTab",
+    "notifications",
+    "storage",
+    "tabs",
+    "webRequest",
+    "https://www.104.com.tw/jobs/**/*",
+    "https://www.104.com.tw/company/*"
+  ],
+  "content_scripts":[
+    {
+      "matches": [
+        "https://www.104.com.tw/company/*"
+      ],
+      "js": ["listen.bundle.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.104.com.tw/jobs/*"
+      ],
+      "js": ["listen.bundle.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.104.com.tw/jobs/*"
+      ],
+      "js": ["ui.bundle.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
