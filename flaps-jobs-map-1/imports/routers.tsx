@@ -9,6 +9,7 @@ import CompaniesView from "/imports/page/company/CompaniesView";
 import ImportTasks from "/imports/page/import-tasks/ImportTasks";
 import MiscInfoView from "/imports/page/MiscInfo/MiscInfoView";
 import ConfigSetup from "/imports/page/config/ConfigSetup";
+import IndustryFilterPage from "/imports/page/industry-filter/IndustryFilterPage";
 export const routes = [
   {
     path: "/",
@@ -19,6 +20,11 @@ export const routes = [
     path: "/companies",
     element: <CompaniesView />,
     title:"Companies"
+  },
+  {
+    path: "/IndustryFilterPage",
+    element: <IndustryFilterPage />,
+    title:"Industry Filter"
   },
   {
     path: "/JobsMapView",

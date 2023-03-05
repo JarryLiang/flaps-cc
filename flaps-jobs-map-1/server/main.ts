@@ -14,7 +14,7 @@ import compositionStart = Simulate.compositionStart;
 
 Meteor.methods({
   'once.seperate':async function (){
-    await Cust104.seperate();
+    //await Cust104.seperate();
   },
   'config.load':async function (){
       const result = await Job104StatusApi.getItem("config");
@@ -27,12 +27,21 @@ Meteor.methods({
     await Job104StatusApi.saveItem("config",raw);
     return true;
   },
+  'jobs.getIndustryIgnoreMap':async function (){
+    return Job104.getIndustryIgnoreMap();
+  },
+  'jobs.setIndustryIgnore':async function (toUpdate){
+    return Job104.setIndustryIgnore(toUpdate);
+  },
   'jobs.getIndustryStatistic':async function (){
     const result = await Job104StatusApi.getItem("byIndustry");
     if(result){
       return result;
     }
     return null;
+  },
+  'companies.loadByIndustry':async function (coIndustryDesc){
+    return Job104.loadByIndustryAndAggToCompany(coIndustryDesc);
   },
   'jobs.list':async function (opt){
     console.log("start");

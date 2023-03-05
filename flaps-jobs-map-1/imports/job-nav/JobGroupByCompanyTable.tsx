@@ -4,13 +4,10 @@ import {IJobGroupByCompany} from "/imports/job-nav/types";
 import {Table} from "antd";
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import OmHelper from 'client/OmHelper';
-import classNames from 'classnames';
 
-import {
-  Button, message, JsonTabSwitchView, Icon, showErr, tryCall, showMsg,
-} from 'components/ui-elements';
-import validateNewUser = Accounts.validateNewUser;
+import {showErr} from "/imports/ui/common/antd-wrap";
+
+
 import CompanyMetaBlock from "./CompanyMetaBlock";
 
 
@@ -46,6 +43,10 @@ function CompanyBrief(props: ICompanyBrief) {
   const {company} = group;
   const {jobAddrNoDesc, custName,custKey} = company;
   const url =`https://www.104.com.tw/company/${custKey}?jobsource=jolist_a_relevance`;
+  if(!custKey){
+    showErr(`${custKey} undefined!`);
+    return ;
+  }
   function openCompany(){
     window.open(url,"_blank");
   }

@@ -1,4 +1,5 @@
 import {JsonButton} from "/imports/components/json-view-dialog/JsonViewBlock";
+import {JobClientUtils} from "/imports/job-nav/JobClientUtils";
 import {TJobAndCust} from "/server/data-104/datatype";
 import React, {useState} from 'react';
 import styled from 'styled-components';
@@ -99,18 +100,6 @@ const DrawerHolder = styled.div`
 
 `;
 
-// @ts-ignore
-function mergeGroups(allRecords, group) {
-  if (group.levelType) {
-    const {groups} = group;
-    console.log(groups.length);
-    groups.forEach((g: any) => {
-      mergeGroups(allRecords, g);
-    });
-  } else {
-    allRecords.push(group.record);
-  }
-}
 
 interface IProps {
   records: TJobAndCust[];
@@ -234,50 +223,6 @@ function JobGroupByCompanyView(props: IProps2) {
 /******************************************************/
 
 
-function groupByCompany(allrec: TJobAndCust[]) {
-  const companiesMap: {
-    [key: string]: IJobGroupByCompany
-  } = {};
-
-
-  allrec.forEach((j) => {
-    // @ts-ignore
-    const {
-      custNo, custName, coIndustryDesc, jobAddrNoDesc,
-      custKey,ignore
-    } = j;
-    let item = companiesMap[custNo];
-    if (!item) {
-      const company: ICompany = {
-        custNo,
-        custName,
-        coIndustryDesc,
-        jobAddrNoDesc,
-        custKey,
-        ignore
-      }
-      item = {
-        custNo,
-        company,
-        jobs: [j],
-        jobCount: 1
-      }
-      companiesMap[custNo] = item;
-    } else {
-      item.jobs.push(j);
-      item.jobCount = item.jobCount + 1;
-    }
-  });
-  const ll = Object.keys(companiesMap).map((k) => {
-    return companiesMap[k];
-  });
-  ll.sort((a, b) => {
-    return b.jobCount - a.jobCount;
-  })
-  return ll;
-
-}
-
 function JobNav(props: IProps) {
 
   const {records} = props;
@@ -328,8 +273,8 @@ function JobNav(props: IProps) {
       // @ts-ignore
       const all: TJobAndCust[] = [];
       // @ts-ignore
-      mergeGroups(all, group);
-      const _groupBy = groupByCompany(all);
+      JobClientUtils.mergeGroups(all, group);
+      const _groupBy = JobClientUtils.groupByCompany(all);
       // @ts-ignore
       setSelectedRecords(all);
       setGrouped(_groupBy);

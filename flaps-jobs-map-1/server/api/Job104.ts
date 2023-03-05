@@ -11,6 +11,7 @@ import {ICustBase, TJob104} from "/server/data-104/datatype";
 import {Mongo} from "meteor/mongo";
 import {AreaMap} from "/server/data-104/area_";
 
+
 export const Job104Collection = new Mongo.Collection('job104');
 
 
@@ -87,6 +88,28 @@ async function refreshCompanyFromJobs() {
     }
   });
   await Cust104.insertCustBase(ll2);
+
+}
+
+async function loadByIndustryAndAggToCompany(coIndustryDesc: any) {
+  const fields = {
+    jobNo:1,
+    jobName:1,
+    jobAddrNo:1,
+    jobAddrNoDesc:1,
+    custNo:1,
+    custName:1,
+    coIndustryDesc:1,
+    area1Des:1,
+    area1No:1,
+    area2Des:1,
+    area2No:1,
+    empNoN:1,
+  }
+  const ll=Job104Collection.find({coIndustryDesc},{fields}).fetch() as TJob104[];
+  return JSON.stringify(ll);
+
+
 
 }
 
@@ -255,6 +278,27 @@ async function summaryByIndustry() {
 
 }
 
+async function setIndustryIgnore(toUpdate: any) {
+  const raw = await getIndustryIgnoreMap();
+  const jj = JSON.parse(raw);
+
+  const newJJ = {
+    ...jj,
+    ...toUpdate,
+  }
+  await Job104StatusApi.saveItem("IndustryIgnoreMap",JSON.stringify(newJJ));
+}
+async function getIndustryIgnoreMap() {
+  const v =await Job104StatusApi.getItem("IndustryIgnoreMap");
+  if(v){
+    return v;
+  }
+  return  JSON.stringify({});
+
+}
+
+
+
 export const Job104 = {
   updateJobs,
   refreshCompanyFromJobs,
@@ -263,6 +307,8 @@ export const Job104 = {
   loadJobs,
   Job104Collection,
   updateEmpNo,
-  summaryByIndustry
-
+  summaryByIndustry,
+  getIndustryIgnoreMap,
+  setIndustryIgnore,
+  loadByIndustryAndAggToCompany
 }
