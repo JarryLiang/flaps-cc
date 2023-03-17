@@ -7,7 +7,7 @@ export const CacheCollection = new Mongo.Collection('cache');
 
 
 
-async function loadItem(_id) {
+async function loadItem(_id:any) {
   const row=CacheCollection.findOne({_id});
   if(row){
     // @ts-ignore
@@ -29,8 +29,13 @@ async function saveItem(_id: string, value: string) {
   await CacheCollection.upsert(sel, {$set:toSet},{multi:false});
 }
 
+async function clearCache(){
+  CacheCollection.remove({});
+
+}
 
 export const CacheApi = {
   loadItem,
-  saveItem
+  saveItem,
+  clearCache
 }

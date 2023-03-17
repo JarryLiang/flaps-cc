@@ -1,5 +1,5 @@
 import {FieldConvUtils} from "/imports/utils/FieldConvUtils";
-import {ListOP} from "/imports/utils/ListOP";
+
 import {getByPath} from "/imports/utils/obj-helper";
 import {Dictionary} from "/index";
 import {CollectionUtils} from "/server/api/CollectionUtils";
@@ -131,13 +131,9 @@ async function importCompanies(delFile?:boolean) {
     return false;
   });
 
-  const companies:ICustCommon[] =[];
-  list.forEach((item)=>{
+
+  for await (const item of list){
     const company= fetchCompany(item.fullPath);
-    if(delFile){
-      fs.unlinkSync(item.fullPath)
-      console.log(`del ${item.fullPath} `);
-    }
     if(company){
       //==>
       const {capital,empNo} = company;
@@ -156,12 +152,19 @@ async function importCompanies(delFile?:boolean) {
         }
       }
 
-      companies.push(company);
+      try{
+        await Cust104.upsertCust([company]);
+        if(delFile){
+          fs.unlinkSync(item.fullPath)
+          console.log(`del ${item.fullPath} `);
+        }
+      }catch (e){
+        console.error(e)
+        console.error(item.fullPath);
+      }
+
     }
-  });
-  await Cust104.upsertCust(companies);
-
-
+  }
 
 
 }

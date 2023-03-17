@@ -1,8 +1,7 @@
 import {Dictionary} from "/index";
 import {Cust104Collection} from "/server/api/Cust104";
 import { Mongo } from "meteor/mongo";
-import {ListOP} from "/imports/utils/ListOP";
-
+import {ListOP} from "@alibobo99/js-helper";
 
 
 // @ts-ignore
@@ -11,12 +10,13 @@ async function getUniqueValue(col: Mongo.Collection, fieldName: string):Promise<
     [fieldName]:1
   }
   const ll:any[] = await col.find({},{fields:fields}).fetch() as any[];
-  const mm:Dictionary<boolean>= ListOP.listToMap(ll,(r)=> {
+  const mm:Dictionary<boolean>= ListOP.listToMap(ll,(r:any)=> {
     return r[fieldName]
   });
   return mm;
 }
 
+// @ts-ignore
 async function enumField(col: Mongo.Collection, fieldName: string):Promise<any[]> {
   const fields = {
     _id:0,

@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import {showErr} from "/imports/ui/common/antd-wrap";
 
+import {StringHelper} from "@alibobo99/js-helper";
 
 import CompanyMetaBlock from "./CompanyMetaBlock";
 
@@ -62,6 +63,9 @@ function JobGroupByCompanyTable(props: IProps) {
 
   useEffect(() => {
 
+    if(StringHelper.isBlank("")){
+      console.log("GO");
+    }
   }, []);
   if (grouped) {
 

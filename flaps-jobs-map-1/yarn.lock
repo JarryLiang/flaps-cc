@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@alibobo99/js-helper@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@alibobo99/js-helper/-/js-helper-0.0.3.tgz#53169b361f5f5c281501103b82372d57fd4a8ac5"
+  integrity sha512-NyvVD8P1Yi3KrQUXNVvIXn1NWABddCm72fxFM0IINWdQu692lfLDmAJEU3xWKEifKkbsXXmc5zPQQvuXFL98rA==
+  dependencies:
+    underscore.string "^3.3.6"
+
 "@ant-design/colors@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@ant-design/colors/-/colors-6.0.0.tgz#9b9366257cffcc47db42b9d0203bb592c13c0298"

@@ -1,5 +1,3 @@
-
-
 import {CacheApi} from "/server/api/CacheApi";
 import {Cust104} from "/server/api/Cust104";
 import {FileCacheApi} from "/server/api/FileCacheApi";
@@ -7,8 +5,8 @@ import {Job104} from "/server/api/Job104";
 import {Job104StatusApi} from "/server/api/Job104StatusApi";
 import {ImportJobs} from "/server/data-104/doimport";
 import { Meteor } from 'meteor/meteor';
-import {Simulate} from "react-dom/test-utils";
-import compositionStart = Simulate.compositionStart;
+
+
 
 
 
@@ -111,6 +109,7 @@ Meteor.methods({
 
   },
   "misc.clearCache":async function (){
+    await CacheApi.clearCache();
     await FileCacheApi.clearCache();
     return true;
   }

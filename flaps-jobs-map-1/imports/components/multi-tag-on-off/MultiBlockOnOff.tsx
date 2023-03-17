@@ -1,4 +1,4 @@
-import {ListOP, mergeTwoList} from "/imports/utils/ListOP";
+
 import React from 'react';
 import styled from 'styled-components';
 import classNames from 'classnames';
@@ -6,6 +6,7 @@ import { Tag, Checkbox} from "antd";
 import {showErr} from "/imports/ui/common/antd-wrap";
 
 
+import {ListOP} from "@alibobo99/js-helper";
 
 
 const Holder = styled.div`

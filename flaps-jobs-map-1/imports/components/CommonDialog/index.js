@@ -1,8 +1,6 @@
 import React from 'react';
 import { Modal} from "antd";
-import {StringUtils} from "/imports/utils/string";
-
-
+import {StringHelper} from "@alibobo99/js-helper";
 
 
 class CommonDialog extends React.Component {
@@ -41,7 +39,7 @@ class CommonDialog extends React.Component {
 
     let titleFix = title;
     if (closable) {
-      if (StringUtils.isBlank(title)) {
+      if (StringHelper.isBlank(title)) {
         titleFix = 'Dialog';
       }
     }

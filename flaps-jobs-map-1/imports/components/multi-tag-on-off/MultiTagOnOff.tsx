@@ -2,8 +2,7 @@ import React from 'react';
 import {Tag} from "antd";
 
 
-import {ListOP} from "/imports/utils/ListOP";
-
+import {ListOP} from "@alibobo99/js-helper";
 
 import { TagsHolder} from "/imports/components/single-field";
 

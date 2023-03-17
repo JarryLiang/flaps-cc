@@ -7,6 +7,7 @@
 * */
 import {showErr, showMsg} from "/imports/ui/common/antd-wrap";
 
+
 function batchPromise({
                         batchSize, collection, genPromise, onBatchCompleted, concate,
                       }) {

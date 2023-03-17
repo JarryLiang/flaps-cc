@@ -1,10 +1,10 @@
-import {StringUtils} from "/imports/utils/string";
 import {Dictionary} from "/index";
+import {StringHelper} from "@alibobo99/js-helper";
 
 type result = string|number|undefined;
 
 function parseEmpNo(str: string):result {
-  if (StringUtils.isBlank(str)) {
+  if (StringHelper.isBlank(str)) {
     return undefined
   }
   const p1 = /(\d+)人/;

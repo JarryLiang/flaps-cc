@@ -1,9 +1,8 @@
 import {DigestUtils} from "/imports/utils/Digest";
 import {FieldConvUtils} from "/imports/utils/FieldConvUtils";
-import {ListOP} from "/imports/utils/ListOP";
+import {ListOP} from "@alibobo99/js-helper";
 import {getByPath} from "/imports/utils/obj-helper";
 import {Dictionary} from "/index";
-import {CacheApi} from "/server/api/CacheApi";
 import {Cust104} from "/server/api/Cust104";
 import {FileCacheApi} from "/server/api/FileCacheApi";
 import {Job104StatusApi} from "/server/api/Job104StatusApi";
@@ -261,9 +260,12 @@ async function summaryByIndustry() {
     jobNo:1,
   }
   const ll=Job104Collection.find({},{fields}).fetch();
+  // @ts-ignore
   const byIndustry = ListOP.aggByKey(ll,r=>r.coIndustryDesc);
   const st =Object.keys(byIndustry).map((coIndustryDesc)=>{
+    // @ts-ignore
     const list = byIndustry[coIndustryDesc];
+    // @ts-ignore
     const byCust =  ListOP.aggByKey(list,r=>r.custNo);
     const item = {
       coIndustryDesc,

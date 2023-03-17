@@ -2,16 +2,11 @@ import {MultiBlockOnOff} from "/imports/components/multi-tag-on-off/MultiBlockOn
 import {SpinText} from "/imports/components/SpinText/SpinText";
 import {AlignCenterRow} from "/imports/ui/common/AlignCenterRow";
 import {StringInputHook} from "/imports/ui/input/inputs";
-import WordDescWithQueryBlock from "/imports/ui/list/word-desc-with-query";
-import {StringUtils} from "/imports/utils/string";
+import {StringHelper} from "@alibobo99/js-helper";
+
 import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import OmHelper from 'client/OmHelper';
-import classNames from 'classnames';
 
-import {
-  Button, message, JsonTabSwitchView, Icon, showErr, tryCall, showMsg,
-} from 'components/ui-elements';
 import {Meteor} from 'meteor/meteor';
 
 
@@ -60,7 +55,7 @@ function IndustryFilterBlock(props: IProps) {
 
   useEffect(()=>{
       const ll = items||[];
-      if(StringUtils.isBlank(filterText)){
+      if(StringHelper.isBlank(filterText)){
         setRemainItems([...ll]);
       }else{
         const mm=ll.filter((r)=>{

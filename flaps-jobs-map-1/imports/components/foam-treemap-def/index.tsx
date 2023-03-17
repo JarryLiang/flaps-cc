@@ -1,6 +1,6 @@
-import {StringUtils} from "/imports/utils/string";
 
 import {getByPath} from "/imports/utils/obj-helper";
+import {StringHelper} from "@alibobo99/js-helper";
 
 
 export interface ITreeMapLevelNode {
@@ -105,7 +105,7 @@ export interface INumberSegDef {
 };
 
 export function genNumberSegLabel(value:any,segDef:INumberSegDef[],defaultLabel:string):string{
-  if(StringUtils.isEmpty(value)){
+  if(StringHelper.isEmpty(value)){
     return defaultLabel;
   }
   let result:string =defaultLabel;

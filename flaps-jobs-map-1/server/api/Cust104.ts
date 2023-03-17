@@ -3,7 +3,8 @@ import {Dictionary} from "/index";
 import {CacheApi} from "/server/api/CacheApi";
 import {CollectionUtils} from "/server/api/CollectionUtils";
 import {ICustBase, ICustCommon} from "/server/data-104/datatype";
-import {validateHeaderName} from "http";
+import {StringHelper} from "@alibobo99/js-helper";
+
 
 import {Mongo} from "meteor/mongo";
 
@@ -73,6 +74,9 @@ async function loadCompanies() {
 async function upsertCust(companies: ICustCommon[]) {
   for await (const cust of companies){
     const sel = {_id:cust._id};
+    if(StringHelper.isBlank(cust._id)){
+      throw "null id";
+    }
     await Cust104Collection.upsert(sel, {$set:cust});
   }
 }
@@ -165,7 +169,8 @@ async function getMeta(custNo: any) {
   if(!row){
     return {};
   }
-  return row.meta || {};
+  // @ts-ignore
+  return row["meta"] || {};
 }
 
 async function setMeta(custNo: any, meta: any) {
