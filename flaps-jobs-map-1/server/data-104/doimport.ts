@@ -59,6 +59,34 @@ function fetchJobs(fileName:string):TJob104[]{
 }
 
 
+
+
+function removeDot(s:string):string{
+  let ns = s;
+  while(ns.indexOf(".")>=0){
+    ns=ns.replace(".","_");
+  }
+  return ns;
+}
+
+function checkKeyWithDot(j: any) {
+
+  const result:{[key:string]:any} = {};
+  Object.keys(j).forEach((k)=>{
+    let value = j[k];
+    if(typeof (value)==='object'){
+       value = checkKeyWithDot(value);
+    }
+    if(k.indexOf(".")>=0){
+      const newKey=removeDot(k);
+      result[newKey]=value;
+    }else {
+      result[k]=value;
+    }
+  });
+  return result;
+}
+
 async function importJobs(delFile?:boolean){
   const root:string = await getRootPath();
   const list:IFileItem[]=FsUtils.loopScanFile(root,(f)=>{
@@ -113,8 +141,12 @@ async function importJobs(delFile?:boolean){
     }
   });
 
+  // @ts-ignore
+  allJobs=allJobs.map((j)=>{
+    return checkKeyWithDot(j);
+  });
   Job104.updateJobs(allJobs).then(()=>{
-    console.log("complete");
+    console.log("complete import job:"+allJobs.length);
   })
 
 }
@@ -191,7 +223,7 @@ async function exportEmp() {
 
 }
 
-export const ImportJobs = {
+export const ImportTasks = {
   importJobs,
   importCompanies,
   exportCapl,

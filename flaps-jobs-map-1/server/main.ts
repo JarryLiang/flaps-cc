@@ -3,7 +3,7 @@ import {Cust104} from "/server/api/Cust104";
 import {FileCacheApi} from "/server/api/FileCacheApi";
 import {Job104} from "/server/api/Job104";
 import {Job104StatusApi} from "/server/api/Job104StatusApi";
-import {ImportJobs} from "/server/data-104/doimport";
+import {ImportTasks} from "/server/data-104/doimport";
 import { Meteor } from 'meteor/meteor';
 
 
@@ -62,12 +62,14 @@ Meteor.methods({
     const value = await CacheApi.loadItem("company.list");
 
     if(!value) {
+      console.log("no company cache");
       const ll = await Cust104.loadCompanies();
       const v = JSON.stringify(ll);
+      console.log("company cache size:"+v.length)
       await CacheApi.saveItem("company.list", v);
       return v;
     }else {
-      console.log("return cache");
+      console.log("return cache:"+value.length);
       return value;
     }
   },
@@ -77,7 +79,7 @@ Meteor.methods({
     return v;
   },
   'import.jobs':async function (){
-    await ImportJobs.importJobs(false);
+    await ImportTasks.importJobs(false);
     await Job104.refreshCompanyFromJobs();
     await Job104.refreshJobCount();
     await Job104.summaryByIndustry();
@@ -85,12 +87,12 @@ Meteor.methods({
   },
   'import.companies':async function (){
     //await Job104.fixArea();
-    await ImportJobs.importCompanies(true);
+    await ImportTasks.importCompanies(true);
     console.log("done");
   },
   'info.misc':async function (){
-    const empNos = await ImportJobs.exportEmp();
-    const capls = await ImportJobs.exportCapl();
+    const empNos = await ImportTasks.exportEmp();
+    const capls = await ImportTasks.exportCapl();
     const ignoredCompanies = await Cust104.loadIgnoreCompanies();
     return {
       empNos,
