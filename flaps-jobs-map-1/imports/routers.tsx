@@ -1,3 +1,5 @@
+import MiscTestPage from "/imports/page/misc-test/MiscTestPage";
+import OpenPageHelper from "/imports/page/open-104/OpenPageHelper";
 import React from "react";
 
 import Home from "/imports/page/home";
@@ -46,9 +48,14 @@ export const routes = [
     element: <ConfigSetup />,
     title:"Config Setup"
   },
-
-
-
-
-
+  {
+    path: "/OpenPageHelper",
+    element: <OpenPageHelper />,
+    title:"Open 104 helper"
+  },
+  {
+    path: "/ForTest",
+    element: <MiscTestPage />,
+    title:"Misc Test"
+  }
 ]

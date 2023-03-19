@@ -301,8 +301,6 @@ function JobsMapView(props:IProps) {
 }
 
 
-export function JobsMapView_ForStory(props:IProps){
- return (<JobsMapView {...props} />);
-}
+
 
 export default JobsMapView;
