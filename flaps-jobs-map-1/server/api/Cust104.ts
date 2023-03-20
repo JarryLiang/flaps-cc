@@ -2,6 +2,7 @@ import {FieldConvUtils} from "/imports/utils/FieldConvUtils";
 import {Dictionary} from "/index";
 import {CacheApi} from "/server/api/CacheApi";
 import {CollectionUtils} from "/server/api/CollectionUtils";
+import {Job104StatusCollection} from "/server/api/Job104StatusApi";
 import {ICustBase, ICustCommon} from "/server/data-104/datatype";
 import {StringHelper} from "@alibobo99/js-helper";
 
@@ -244,7 +245,32 @@ async function loadIgnoreRaw(){
 
 }
 
+async function addIgnoreKeyword(keyword: string) {
+  const row =await Job104StatusCollection.findOne("ignoreKeyword");
+  if(!row){
+    const data = {
+      _id:"ignoreKeyword",
+      value:[keyword]
+    }
+    await Job104StatusCollection.insert(data);
+  }else {
+    // @ts-ignore
+    const newList = [keyword,...row.value||[]];
+    const data = {
+      value:newList
+    }
+    await Job104StatusCollection.upsert({_id:"ignoreKeyword"},{$set:data});
+  }
+}
 
+async function loadIgnoreKeyword() {
+  const row = await Job104StatusCollection.findOne("ignoreKeyword");
+  if(!row){
+    return [];
+  }else {
+    return row.value || [];
+  }
+}
 
 export const Cust104 = {
   insertCustBase,
@@ -260,7 +286,10 @@ export const Cust104 = {
   getMeta,
   setMeta,
   saveIgnoreRaw,
-  loadIgnoreRaw
+  loadIgnoreRaw,
+  addIgnoreKeyword,
+  loadIgnoreKeyword
+
 }
 
 

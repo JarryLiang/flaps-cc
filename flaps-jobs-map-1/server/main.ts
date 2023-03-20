@@ -4,6 +4,7 @@ import {FileCacheApi} from "/server/api/FileCacheApi";
 import {Job104} from "/server/api/Job104";
 import {Job104StatusApi} from "/server/api/Job104StatusApi";
 import {ImportTasks} from "/server/data-104/doimport";
+import {StringHelper} from "@alibobo99/js-helper";
 import { Meteor } from 'meteor/meteor';
 
 
@@ -114,6 +115,15 @@ Meteor.methods({
     await CacheApi.clearCache();
     await FileCacheApi.clearCache();
     return true;
+  },
+  "ignore.addKeyword":async function (keyword:string){
+    if(StringHelper.isBlank(keyword)){
+      return;
+    }
+    await Cust104.addIgnoreKeyword(keyword);
+  },
+  "ignore.loadKeyword":async function (){
+    return Cust104.loadIgnoreKeyword();
   }
 
 })

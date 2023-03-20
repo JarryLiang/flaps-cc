@@ -1,3 +1,4 @@
+import CompanyFilterManagement from "/imports/page/company-filter/CompanyFilterManagement";
 import MiscTestPage from "/imports/page/misc-test/MiscTestPage";
 import OpenPageHelper from "/imports/page/open-104/OpenPageHelper";
 import React from "react";
@@ -23,6 +24,12 @@ export const routes = [
     element: <CompaniesView />,
     title:"Companies"
   },
+  {
+    path: "/companies/CompanyFilterManagement",
+    element: <CompanyFilterManagement />,
+    title:"管理預設過濾公司關鍵字"
+  },
+
   {
     path: "/IndustryFilterPage",
     element: <IndustryFilterPage />,
